@@ -15,7 +15,7 @@ struct MainView: View {
                 .tabItem{
                     Label("Open", systemImage: "lock.open")
                 }
-            ProjectList(projectStore: projectStore)
+            ClosedProjectList(projectStore: projectStore)
                 .tabItem{
                     Label("Closed", systemImage: "lock")
                 }

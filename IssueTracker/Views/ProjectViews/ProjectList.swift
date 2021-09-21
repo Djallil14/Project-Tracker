@@ -26,7 +26,9 @@ struct ProjectList: View {
                         }
                     }
                     if projectStore.projects.isEmpty{
-                        ProjectListEmptyView(projectStore: projectStore)
+                        NavigationLink(destination: AddProject(projectStore: projectStore)){
+                            ProjectListEmptyViewLabel(projectStore: projectStore)
+                        }
                     }
                 }.navigationTitle("Projects")
                     .navigationBarTitleDisplayMode(.inline)
@@ -45,10 +47,6 @@ struct ProjectList: View {
             }
         }.navigationViewStyle(StackNavigationViewStyle())
     }
-    private func projectColor(_ project: Project)->Color{
-        
-        return Color.high
-    }
 }
 
 struct ProjectList_Previews: PreviewProvider {
@@ -59,13 +57,21 @@ struct ProjectList_Previews: PreviewProvider {
     }
 }
 
-struct ProjectListEmptyView: View {
+struct ProjectListEmptyViewLabel: View {
     @ObservedObject var projectStore: ProjectStore
     var body: some View {
-        VStack{
-            Spacer()
-            Text("Press on the plus button to add your first project")
-            Spacer()
-        }
+        ZStack {
+            RoundedRectangle(cornerRadius: 12, style: .continuous).stroke(lineWidth: 2)
+                .foregroundColor(.accentColor)
+                VStack {
+                    Image(systemName: "plus.rectangle")
+                        .padding()
+                    Text("Add your first project")
+                        .font(.headline)
+                        .bold()
+                    .foregroundColor(.accentColor)
+                }
+        }.padding()
+            .frame(width: 200, height: 200)
     }
 }

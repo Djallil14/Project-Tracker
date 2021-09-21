@@ -30,4 +30,8 @@ class ProjectStore: ObservableObject {
             }
         }
     }
+    func closeProject(_ project: Project){
+        projects.removeAll(where: {$0.id == project.id})
+        closedProjects.append(project)
+    }
 }

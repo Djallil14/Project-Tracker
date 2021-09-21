@@ -14,9 +14,16 @@ struct IssuesList: View {
             GridItem(.adaptive(minimum: 100))
         ]
     var body: some View {
+        ZStack {
             ForEach(Priority.allCases, id:\.self){priority in
-                PriorityListIssue(priority: priority, project: $project)
+                    PriorityListIssue(priority: priority, project: $project)
             }
+            if project.issues.isEmpty{
+                NavigationLink(destination: AddIssueView(project: $project)){
+                IssueListEmptyViewLabel()
+                }
+            }
+        }
     }
 }
 
@@ -36,3 +43,20 @@ struct PriorityListIssue: View {
     }
 }
 
+struct IssueListEmptyViewLabel: View {
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 12, style: .continuous).stroke(lineWidth: 2)
+                .foregroundColor(.accentColor)
+                VStack {
+                    Image(systemName: "plus.rectangle")
+                        .padding()
+                    Text("Add your first issue")
+                        .font(.headline)
+                        .bold()
+                    .foregroundColor(.accentColor)
+                }
+        }.padding()
+            .frame(width: 200, height: 200)
+    }
+}

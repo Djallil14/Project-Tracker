@@ -15,31 +15,53 @@ struct ProjectDetailView: View {
         ZStack {
             Color.background.edgesIgnoringSafeArea(.all)
             ScrollView(.vertical, showsIndicators: false){
-                VStack(alignment:.center, spacing: 8){
+                VStack(alignment:.leading, spacing: 8){
                     Text(project.description)
                         .font(.caption)
                         .italic()
                         .foregroundColor(.secondary)
+                        .padding()
                     Text("Team:").font(.headline)
+                        .padding(8)
                     ForEach(project.team){employee in
-                        Text("\(employee.name) \(employee.role.description)")
-                            .font(.subheadline)
+                        HStack{
+                            Spacer()
+                        Text(employee.name)
+                                .font(.subheadline)
+                            Spacer()
+                        Text(employee.role.description)
+                            .font(.headline)
+                            Spacer()
+                        }
                         
                     }.padding(8)
                     IssuesList(project: $project)
+                    Spacer()
                     HStack {
                         Spacer()
-                        Button(action: {showAddIssueSheet.toggle()
-                            projectStore.addIssues(project)
-                        }){
-                            HStack {
-                                Image(systemName: "plus")
-                                Text("Add issue")
+                        VStack{
+                            NavigationLink(destination: AddIssueView(project: $project)){
+                                HStack {
+                                    Image(systemName: "plus")
+                                    Text("Add issue")
+                                }.font(.headline)
+                                .foregroundColor(.white)
+                                .padding()
+                                .background(Color.accentColor)
+                                .cornerRadius(12)
+                            }
+                            Button(action:{projectStore.closeProject(project)}){
+                                Text("Close Project")
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(Color.red)
+                                    .cornerRadius(12)
                             }
                         }
                         Spacer()
                     }
-                    Spacer()
+                    
                 }
             }.navigationTitle(project.title)
                 .toolbar{

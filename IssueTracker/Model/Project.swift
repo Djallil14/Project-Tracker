@@ -17,16 +17,20 @@ struct Project: Identifiable {
     var isOpen: Bool
     var team: [Employees]
     var priority: Priority {
-        if endDate == Date() {
-            return .high
-        } else if endDate < Date() {
-            return .urgent
-        } else if endDate > Date().addingTimeInterval(43800) {
-            return .veryLow
-        }else if endDate > Date().addingTimeInterval(4380){
-            return .low
-        } else if endDate > Date() {
-            return .medium
+        if isOpen == false {
+            return .closed
+        } else {
+            if endDate == Date() {
+                return .high
+            } else if endDate < Date() {
+                return .urgent
+            } else if endDate > Date().addingTimeInterval(604800) {
+                return .veryLow
+            }else if endDate > Date().addingTimeInterval(2628000){
+                return .low
+            } else if endDate > Date() {
+                return .medium
+            }
         }
         return .closed
     }
