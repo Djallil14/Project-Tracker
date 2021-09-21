@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct IssueTrackerApp: App {
+    init(){
+        UITableView.appearance().backgroundColor = .clear
+        UINavigationBar.appearance().backgroundColor = UIColor(Color.background)
+    }
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
         }
     }
 }
