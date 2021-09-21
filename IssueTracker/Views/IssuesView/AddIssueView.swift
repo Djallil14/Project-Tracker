@@ -18,6 +18,8 @@ struct AddIssueView: View {
             Color.background.edgesIgnoringSafeArea(.all)
             VStack {
                 Form{
+                    TextField("",text: $issue.title)
+                        .listRowBackground(Color.background)
                     Section(header: Text("Prority:")){
                         Picker("Priority:", selection: $issue.priority){
                             ForEach(Priority.allCases, id:\.self){priority in
@@ -47,7 +49,7 @@ struct AddIssueView: View {
                                     }.font(.subheadline)
                                 }
                             }
-                        }
+                        }.listRowBackground(Color.accentColor.opacity(0.1))
                     }
                     TextField("",text:$issue.shortDescription)
                         .font(.caption)
@@ -61,15 +63,12 @@ struct AddIssueView: View {
                             Image(systemName:addLongDescription ? "minus.circle" : "plus.circle")
                         }
                     }.listRowBackground(Color.accentColor.opacity(0.1))
-                    
-                }
-                
-                if addLongDescription {
-                    TextEditor(text: $longDescription)
-                        .font(.caption)
-                        .padding()
-                        .listRowBackground(Color.accentColor.opacity(0.1))
-                        .frame(minHeight: 100)
+                    if addLongDescription {
+                        TextEditor(text: $longDescription)
+                            .font(.caption)
+                            .listRowBackground(Color.accentColor.opacity(0.1))
+                            .frame(minHeight: 100)
+                    }
                 }
                 Spacer()
                 HStack {

@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct AddProject: View {
+    @Environment(\.presentationMode) var presentation
     @ObservedObject var projectStore: ProjectStore
-    @State var project: Project = Project.sampleProject
+    @State var project: Project = Project(id: UUID().uuidString, title: "Your Project Name", description: "A description of your project", issues: [], startDate: Date(), endDate: Date(), isOpen: true, team: [Employees.employee])
     var body: some View {
         ZStack {
             Color.background.edgesIgnoringSafeArea(.all)
@@ -34,7 +35,7 @@ struct AddProject: View {
                     
                         ForEach($project.team){$employee in
                             HStack{
-                                TextField(employee.name, text:$employee.name)
+                                TextField("Employee Name", text: $employee.name)
                                     .disableAutocorrection(true)
                                 Spacer()
                                 Picker("", selection: $employee.role) {
@@ -43,6 +44,7 @@ struct AddProject: View {
                                         .tag(role)
                                     }
                                 }.pickerStyle(MenuPickerStyle())
+                                    .frame(maxWidth: 80)
                             }.padding()
                         }.listRowBackground(Color.background)
                     HStack {
@@ -59,8 +61,8 @@ struct AddProject: View {
                     Button(action:{
                         withAnimation{
                         projectStore.addProject(project)
+                            presentation.wrappedValue.dismiss()
                         }
-                        print(projectStore.projects)
                     }){
                         Text("Done").bold()
                             .padding()

@@ -26,11 +26,11 @@ struct ProjectDetailView: View {
                     ForEach(project.team){employee in
                         HStack{
                             Spacer()
-                        Text(employee.name)
+                            Text(employee.name)
                                 .font(.subheadline)
                             Spacer()
-                        Text(employee.role.description)
-                            .font(.headline)
+                            Text(employee.role.description)
+                                .font(.headline)
                             Spacer()
                         }
                         
@@ -45,10 +45,10 @@ struct ProjectDetailView: View {
                                     Image(systemName: "plus")
                                     Text("Add issue")
                                 }.font(.headline)
-                                .foregroundColor(.white)
-                                .padding()
-                                .background(Color.accentColor)
-                                .cornerRadius(12)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(Color.accentColor)
+                                    .cornerRadius(12)
                             }
                             Button(action:{projectStore.closeProject(project)}){
                                 Text("Close Project")
@@ -61,7 +61,6 @@ struct ProjectDetailView: View {
                         }
                         Spacer()
                     }
-                    
                 }
             }.navigationTitle(project.title)
                 .toolbar{
