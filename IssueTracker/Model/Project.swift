@@ -24,9 +24,9 @@ struct Project: Identifiable {
                 return .high
             } else if endDate < Date() {
                 return .urgent
-            } else if endDate > Date().addingTimeInterval(604800) {
+            } else if endDate > Date().addingTimeInterval(2628000) {
                 return .veryLow
-            }else if endDate > Date().addingTimeInterval(2628000){
+            }else if endDate > Date().addingTimeInterval(604800){
                 return .low
             } else if endDate > Date() {
                 return .medium
@@ -59,9 +59,7 @@ enum Employee: CaseIterable, Hashable {
 }
 
 struct Employees: Identifiable, Hashable {
-    var id: String {
-        name
-    }
+    var id: String = UUID().uuidString
     var name: String
     var role: Employee
     

@@ -10,19 +10,24 @@ import SwiftUI
 struct AddProject: View {
     @Environment(\.presentationMode) var presentation
     @ObservedObject var projectStore: ProjectStore
-    @State var project: Project = Project(id: UUID().uuidString, title: "Your Project Name", description: "A description of your project", issues: [], startDate: Date(), endDate: Date(), isOpen: true, team: [Employees.employee])
+    @State var title: String = ""
+    @State var description: String = "Project Description"
+    @State var startDate = Date()
+    @State var endDate = Date()
+    @State var team: [Employees] = []
+    @State var employeeName: String = ""
     var body: some View {
         ZStack {
             Color.background.edgesIgnoringSafeArea(.all)
             VStack {
                 Form {
-                    AddEditProjectBasicTextField(text: $project.title)
+                    AddEditProjectBasicTextField(text: $title)
                         .listRowBackground(Color.background)
-                    AddEditProjectBasicTextEditor(text: $project.description)
+                    AddEditProjectBasicTextEditor(text: $description)
                         .listRowBackground(Color.background)
-                    DatePicker("Start Date", selection: $project.startDate)
+                    DatePicker("Start Date", selection: $startDate)
                         .listRowBackground(Color.background)
-                    DatePicker("End Date", selection: $project.endDate)
+                    DatePicker("End Date", selection: $endDate)
                         .listRowBackground(Color.background)
                     
                         HStack{
@@ -33,22 +38,22 @@ struct AddProject: View {
                             .padding(.vertical)
                             .listRowBackground(Color.background)
                     
-                        ForEach($project.team){$employee in
+                    ForEach($projectStore.tempTeam){$employee in
                             HStack{
-                                TextField("Employee Name", text: $employee.name)
+                                TextField("", text: $employee.name)
                                     .disableAutocorrection(true)
-                                Spacer()
+                                    .tag(employee.id)
                                 Picker("", selection: $employee.role) {
                                 ForEach(Employee.allCases, id: \.self) { role in
                                         Text(role.description)
                                         .tag(role)
                                     }
                                 }.pickerStyle(MenuPickerStyle())
-                                    .frame(maxWidth: 80)
+                                
                             }.padding()
                         }.listRowBackground(Color.background)
                     HStack {
-                        Button(action: {project.team.append(Employees(name: "New Employee", role: .notDefined))}){
+                        Button(action: {projectStore.newEmployee()}){
                             Label("Add new employee", systemImage: "plus.circle")
                                 .imageScale(.large)
                         }.padding(8)
@@ -60,7 +65,7 @@ struct AddProject: View {
                     Spacer()
                     Button(action:{
                         withAnimation{
-                        projectStore.addProject(project)
+                            projectStore.addProject(Project(id: UUID().uuidString, title: title, description: description, issues: [], startDate: startDate, endDate: endDate, isOpen: true, team: projectStore.tempTeam))
                             presentation.wrappedValue.dismiss()
                         }
                     }){
@@ -74,8 +79,6 @@ struct AddProject: View {
                 }.listRowBackground(Color.background)
                     .padding()
             }
-        }.onAppear{
-            project.id = UUID().uuidString
         }
     }
 }

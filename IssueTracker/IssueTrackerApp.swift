@@ -12,7 +12,7 @@ struct IssueTrackerApp: App {
     init(){
         UITableView.appearance().backgroundColor = .clear
         UINavigationBar.appearance().backgroundColor = UIColor(Color.background)
-                UITextView.appearance().backgroundColor = .clear
+        UITextView.appearance().backgroundColor = .clear
     }
     var body: some Scene {
         WindowGroup {

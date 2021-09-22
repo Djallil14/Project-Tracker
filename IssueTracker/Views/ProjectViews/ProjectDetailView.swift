@@ -79,9 +79,10 @@ struct ProjectDetailView: View {
 }
 
 struct ProjectDetailView_Previews: PreviewProvider {
+    static var project = Project(id: UUID().uuidString, title: "Project", description: "", issues: Issue.issues, startDate: Date(), endDate: Date(), isOpen: true, team: [])
     static var previews: some View {
         NavigationView{
-            ProjectDetailView(projectStore: ProjectStore(),project:.constant(Project.sampleProject))
+            ProjectDetailView(projectStore: ProjectStore(),project:.constant(project))
         }
     }
 }

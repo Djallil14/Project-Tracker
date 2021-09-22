@@ -34,21 +34,31 @@ struct ProjectItemList: View {
                 Spacer()
             }
             VStack{
-                Text("Issues :").font(.headline)
+                Text("Issues :")
+                    .font(.headline)
                     .padding(8)
+                    .foregroundColor(color)
                 HStack{
+                    Spacer()
                     smallIssueBadges(.urgent)
                     smallIssueBadges(.high)
                     smallIssueBadges(.medium)
+                    Spacer()
                 }
                 HStack{
+                    Spacer()
                     smallIssueBadges(.low)
                     smallIssueBadges(.veryLow)
                     smallIssueBadges(.closed)
+                    Spacer()
                 }
             }
+            .padding(.bottom)
+            .background(Color.white.opacity(0.6).blendMode(.overlay))
             
-        }.padding()
+                
+            
+        }
             .background(color.opacity(0.8))
             .foregroundColor(.white)
         .cornerRadius(18)
@@ -66,6 +76,7 @@ struct ProjectItemList: View {
 
 struct ProjectItemList_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectItemList(project: Project.sampleProject, color: .blue)
+        ProjectItemList(project: Project.sampleProject, color: .high)
+            .padding()
     }
 }

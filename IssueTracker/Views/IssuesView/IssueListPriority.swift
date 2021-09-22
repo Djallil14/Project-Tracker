@@ -31,8 +31,9 @@ struct IssueListPriority: View {
 }
 
 struct IssueListPriority_Previews: PreviewProvider {
+    static var project = Project(id: UUID().uuidString, title: "Project", description: "", issues: Issue.issues, startDate: Date(), endDate: Date(), isOpen: true, team: [])
     static var previews: some View {
-        IssueListPriority(priority: .urgent, project:.constant(Project.sampleProject))
+        IssueListPriority(priority: .urgent, project:.constant(project))
     }
 }
 struct TitlePriorityHeader: View {

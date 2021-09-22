@@ -15,8 +15,10 @@ struct IssuesList: View {
         ]
     var body: some View {
         ZStack {
+            VStack{
             ForEach(Priority.allCases, id:\.self){priority in
                     PriorityListIssue(priority: priority, project: $project)
+            }
             }
             if project.issues.isEmpty{
                 NavigationLink(destination: AddIssueView(project: $project)){
@@ -28,8 +30,9 @@ struct IssuesList: View {
 }
 
 struct IssuesList_Previews: PreviewProvider {
+    static var project = Project(id: UUID().uuidString, title: "Project", description: "", issues: Issue.issues, startDate: Date(), endDate: Date(), isOpen: true, team: [])
     static var previews: some View {
-        IssuesList(project: .constant(Project.sampleProject))
+        IssuesList(project: .constant(project))
     }
 }
 

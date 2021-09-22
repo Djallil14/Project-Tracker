@@ -10,6 +10,7 @@ import Foundation
 class ProjectStore: ObservableObject {
     @Published var projects: [Project] = []
     @Published var closedProjects: [Project] = []
+    @Published var tempTeam : [Employees] = []
     
     func addProject(_ project: Project){
         projects.append(project)
@@ -33,5 +34,8 @@ class ProjectStore: ObservableObject {
     func closeProject(_ project: Project){
         projects.removeAll(where: {$0.id == project.id})
         closedProjects.append(project)
+    }
+    func newEmployee(){
+        tempTeam.append(Employees(name: "New Employee", role: .notDefined))
     }
 }
