@@ -32,8 +32,30 @@ class ProjectStore: ObservableObject {
         }
     }
     func closeProject(_ project: Project){
+        
         projects.removeAll(where: {$0.id == project.id})
-        closedProjects.append(project)
+        var projectToEdit = project
+        projectToEdit.issues = []
+        project.issues.forEach({
+            issue in
+            var issueToAppend = issue
+            issueToAppend.priority = .closed
+            issueToAppend.isOpen = false
+            projectToEdit.issues.append(issueToAppend)
+        })
+        closedProjects.append(projectToEdit)
+    }
+    func openProject(_ project: Project){
+        var projectToOpen = project
+        closedProjects.removeAll(where: {$0.id == project.id})
+        projectToOpen.issues = []
+        projectToOpen.issues.forEach({
+            var issuesToAppend = $0
+            issuesToAppend.isOpen = true
+            issuesToAppend.priority = .medium
+            projectToOpen.issues.append(issuesToAppend)
+        })
+        projects.append(projectToOpen)
     }
     func newEmployee(){
         tempTeam.append(Employees(name: "New Employee", role: .notDefined))

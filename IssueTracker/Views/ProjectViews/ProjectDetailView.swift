@@ -11,6 +11,7 @@ struct ProjectDetailView: View {
     @ObservedObject var projectStore: ProjectStore
     @Binding var project: Project
     @State private var showAddIssueSheet: Bool = false
+    @State private var showingClosedProject = false
     var body: some View {
         ZStack {
             Color.background.edgesIgnoringSafeArea(.all)
@@ -50,13 +51,24 @@ struct ProjectDetailView: View {
                                     .background(Color.accentColor)
                                     .cornerRadius(12)
                             }
-                            Button(action:{projectStore.closeProject(project)}){
-                                Text("Close Project")
-                                    .font(.headline)
-                                    .foregroundColor(.white)
-                                    .padding()
-                                    .background(Color.red)
-                                    .cornerRadius(12)
+                            if !showingClosedProject{
+                                Button(action:{projectStore.closeProject(project)}){
+                                    Text("Close Project")
+                                        .font(.headline)
+                                        .foregroundColor(.white)
+                                        .padding()
+                                        .background(Color.red)
+                                        .cornerRadius(12)
+                                }
+                            } else {
+                                Button(action:{projectStore.openProject(project)}){
+                                    Text("Open Project")
+                                        .font(.headline)
+                                        .foregroundColor(.white)
+                                        .padding()
+                                        .background(Color.green)
+                                        .cornerRadius(12)
+                                }
                             }
                         }
                         Spacer()
