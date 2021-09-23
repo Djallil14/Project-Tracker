@@ -11,7 +11,7 @@ struct ProjectDetailView: View {
     @ObservedObject var projectStore: ProjectStore
     @Binding var project: Project
     @State private var showAddIssueSheet: Bool = false
-    @State private var showingClosedProject = false
+    @State var showingClosedProject = false
     var body: some View {
         ZStack {
             Color.background.edgesIgnoringSafeArea(.all)

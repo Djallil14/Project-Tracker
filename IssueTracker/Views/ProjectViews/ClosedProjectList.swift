@@ -19,7 +19,7 @@ struct ClosedProjectList: View {
                 ScrollView(.vertical){
                     LazyVGrid(columns:columns){
                         ForEach($projectStore.closedProjects){$project in
-                            NavigationLink(destination: ProjectDetailView(projectStore: projectStore, project: $project)){
+                            NavigationLink(destination: ProjectDetailView(projectStore: projectStore, project: $project, showingClosedProject: true)){
                                 ProjectItemList(project: project, color:.secondary).padding()
                                     .foregroundColor(.black)
                             }
